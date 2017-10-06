@@ -43,6 +43,6 @@ module.exports = {
 		],
 		"no-unexpected-multiline": 1,
 		"no-await-in-loop": 1,
-		"no-extra-parens": 1
+		"no-extra-parens": 0
 	}
 }

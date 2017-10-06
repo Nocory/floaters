@@ -4,6 +4,7 @@ body {
 }
 
 .floater-wrapper {
+	z-index: -9999;
 	position: relative;
 	height: 100%;
 	width: 100%;
@@ -14,10 +15,51 @@ body {
 .floater {
 	position: absolute;
 	box-sizing: border-box;
+	top: 0;
+	left: 0;
 	color: tomato;
 	text-align: center;
 	text-shadow: 0px 0px 1px black;
 	border-radius: 50%;
-	opacity: 0;
+	opacity: 0.95;
 	transform-origin: center;
+}
+
+.vignette {
+	position: absolute;
+	z-index: -8888;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0deg, black 0%, transparent 50%, black 100%);
+	opacity: 0.25;
+}
+
+.shadow-1 {
+	position: absolute;
+	z-index: 200;
+	width: 300%;
+	height: 300%;
+	left: -100%;
+	top: -100%;
+	background: linear-gradient(0deg, black 0%, transparent 25%, black 50%, transparent 75%, black 100%);
+	opacity: 0.5;
+	transform: translate(0, 0);
+	animation: shift 52s ease-in-out infinite alternate;
+}
+
+.shadow-2 {
+	@extend .shadow-1;
+	z-index: 500;
+	animation: shift 84s ease-in-out infinite alternate;
+}
+
+@keyframes shift {
+	from {
+		transform: translate(0%, -33%)
+	}
+	to {
+		transform: translate(0%, 33%)
+	}
 }
