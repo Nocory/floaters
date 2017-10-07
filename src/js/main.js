@@ -47,7 +47,7 @@ const createFloater = (advanceInTime = 0) => {
 	floater.classList.add("floater")
 	floater.style.width = `${size}px`
 	floater.style.height = `${size}px`
-	floater.style.transform = `translateX(${xStart}px) translateY(${yStart}px)`
+	floater.style.transform = `translateX(${xStart}px) translateY(${yStart}px) rotate(0.0001deg)`
 	floater.style.transition = `transform ${timeToLive}s linear`
 
 	floater.style.background = `rgba(${Math.floor(128 + Math.random() * 128)},${Math.floor(128 + Math.random() * 128)},${Math.floor(128 + Math.random() * 128)},0.5)`
@@ -56,7 +56,7 @@ const createFloater = (advanceInTime = 0) => {
 	document.getElementById("z" + ((config.zLevels - 1) - Math.floor(zFloat))).appendChild(floater)
 
 	setTimeout(() => {
-		floater.style.transform = `translate(${xEnd}px, ${yEnd}px)`
+		floater.style.transform = `translate(${xEnd}px, ${yEnd}px) rotate(0.0001deg)`
 	}, 250)
 
 	floater.addEventListener("transitionend", function() {
