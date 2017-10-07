@@ -9,13 +9,53 @@ body {
 	z-index: -100;
 }
 
-.floater-wrapper {
+.aquarium {
 	z-index: -2;
 	position: relative;
 	height: 100%;
 	width: 100%;
 	background: linear-gradient(150deg, #2B4061, #091220);
 	overflow: hidden;
+}
+
+#z0 {
+	z-index: 0;
+	filter: blur(10px) brightness(0.6);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+
+#z1 {
+	@extend #z0;
+	z-index: 1;
+	filter: blur(8px) brightness(0.68);
+}
+
+#z2 {
+	@extend #z0;
+	z-index: 2;
+	filter: blur(6px) brightness(0.76);
+}
+
+#z3 {
+	@extend #z0;
+	z-index: 3;
+	filter: blur(4px) brightness(0.84);
+}
+
+#z4 {
+	@extend #z0;
+	z-index: 4;
+	filter: blur(2px) brightness(0.92);
+}
+
+#z5 {
+	@extend #z0;
+	z-index: 5;
+	filter: blur(4px) brightness(1);
 }
 
 .floater {
@@ -26,7 +66,7 @@ body {
 	color: tomato;
 	text-align: center;
 	text-shadow: 0px 0px 1px black;
-	border: 2px solid #aaa;
+	border: 2px solid #ccc;
 	border-radius: 50%;
 	opacity: 0.95;
 	transform-origin: center;
@@ -38,20 +78,20 @@ body {
 	z-index: 9999;
 	top: 0;
 	left: 0;
-	color: lightblue;
+	color: #eee;
 	font-family: sans-serif;
 	font-size: 1.5rem;
 	padding: 0.5rem;
-	background: #333;
+	background: #222;
 }
 
 .vignette {
 	position: absolute;
-	z-index: -1;
+	z-index: 1001;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	background: linear-gradient(0deg, black 0%, transparent 50%, black 100%);
-	opacity: 0.25;
+	opacity: 0.5;
 }

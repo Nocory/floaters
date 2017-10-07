@@ -1,59 +1,40 @@
 import "css/main.scss"
 
-//const anime = require("animejs")
-
+let aquarium = document.querySelector(".aquarium")
 
 const config = {
-	floaterInterval: 4000,
-	zLevels: 1000,
-	zFocus: 250,
+	floaterInterval: 3500,
+	zLevels: 6,
 	size: 256,
 	speed: 16
 }
 
-let aquarium = document.querySelector(".floater-wrapper")
 let leftSide = true
-
 const createFloater = (advanceInTime = 0) => {
-	let zFloat = Math.random() * config.zLevels
-	let zIndex = Math.round(zFloat)
-	//let timeToLive = 30 + zIndex / 5
-
-	let scale = 1 + Math.random() * 0.5
-
-	scale *= 1 + (1 - zFloat / config.zLevels)
-
-	//console.log(zFocus, zFloat)
-	if (zFloat < config.zLevels / 20) {
-		scale *= 1 + Math.random() * 1
-	}
-	/*
-	if (zFloat > zLevels * 0.8 && Math.random() > 0.9) {
-		scale += 2 * Math.random() * 1
-		console.log("LARGE")
-		floater.style.background = "tomato"
-		floater.style.zIndex = -zIndex
-	}
-	*/
-	let size = Math.round(config.size * scale)
 	leftSide = !leftSide
+	let zFloat = Math.random() * config.zLevels
 
+	let scale = 1 + Math.random() * 0.25
+	scale *= 1 + (1 - zFloat / config.zLevels)
+	if (zFloat < 2) {
+		scale *= 1 + Math.random() * 0.5
+	}
+	let size = Math.round(config.size * scale)
 	let xStart = leftSide ? -size * 1.2 : aquarium.clientWidth + size * 0.2
 	let xEnd = !leftSide ? -size * 1.2 : aquarium.clientWidth + size * 0.2
 	let yStart = Math.random() * (aquarium.offsetHeight * 2) - (aquarium.offsetHeight / 2) - (size / 2)
 	let maxYDiff = aquarium.clientWidth / 2
 	let yEnd = yStart + (maxYDiff - (Math.random() * (maxYDiff * 2)))
 
-	let xDist = Math.abs(xStart - xEnd)
-	let yDist = Math.abs(yStart - yEnd)
-
-	let dist = Math.sqrt(xDist * xDist + yDist * yDist)
-	let timeToLive = (dist / config.speed) * (1 + (zFloat / config.zLevels))
-
 	if (
 		yStart > aquarium.offsetHeight && yEnd > aquarium.offsetHeight ||
 		yStart < -size && yEnd < -size
 	) return
+
+	let xDist = Math.abs(xStart - xEnd)
+	let yDist = Math.abs(yStart - yEnd)
+	let dist = Math.sqrt(xDist * xDist + yDist * yDist)
+	let timeToLive = (dist / config.speed) * (1 + (zFloat / config.zLevels))
 
 	if (advanceInTime) {
 		xStart += (xEnd - xStart) * (advanceInTime / timeToLive)
@@ -64,25 +45,15 @@ const createFloater = (advanceInTime = 0) => {
 
 	let floater = document.createElement("div")
 	floater.classList.add("floater")
-	floater.style.zIndex = floater.style.zIndex || config.zLevels - zIndex
 	floater.style.width = `${size}px`
 	floater.style.height = `${size}px`
-	floater.style.background = floater.style.background || "#ccc"
-	floater.style.filter = `blur(${2 + Math.round(Math.abs(zIndex - config.zFocus) / 50)}px) brightness(${1 - (zFloat / config.zLevels) / 2})`
-	floater.style.transformOrigin = "center"
 	floater.style.transform = `translateX(${xStart}px) translateY(${yStart}px)`
-	floater.style.transition = `all ${timeToLive}s linear`
+	floater.style.transition = `transform ${timeToLive}s linear`
 
-	aquarium.appendChild(floater)
+	floater.style.background = `rgba(${Math.floor(128 + Math.random() * 128)},${Math.floor(128 + Math.random() * 128)},${Math.floor(128 + Math.random() * 128)},0.5)`
 
-	/*
-		anime({
-			targets: floater,
-			translateX: xEnd,
-			translateY: yEnd,
-			duration: timeToLive
-		})
-		*/
+	//aquarium.appendChild(floaterWrapper)
+	document.getElementById("z" + ((config.zLevels - 1) - Math.floor(zFloat))).appendChild(floater)
 
 	setTimeout(() => {
 		floater.style.transform = `translate(${xEnd}px, ${yEnd}px)`
@@ -95,10 +66,11 @@ const createFloater = (advanceInTime = 0) => {
 
 setInterval(() => {
 	document.getElementById("floater-num").innerText = document.getElementsByClassName("floater").length + " divs"
-}, 1000)
+}, 1005)
 
 const initFloaters = () => {
 	console.log("INIT")
+
 	config.size = window.screen.width * 0.05 + window.screen.height * 0.05
 	for (let floater of document.querySelectorAll(".floater")) {
 		floater.remove()
